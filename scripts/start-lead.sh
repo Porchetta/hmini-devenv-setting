@@ -4,7 +4,7 @@
 # Remote Control은 /config에서 "모든 세션에 켜기"를 해 두면 자동으로 붙는다.
 set -euo pipefail
 
-workdir=${1:?작업 폴더를 지정하세요. 예: start-lead.sh ~/code/myapp}
+workdir=${1:?작업 폴더를 지정하세요. 예: start-lead.sh ~/claude-workspace/myapp}
 session=${2:-lead}
 
 if [ ! -d "$workdir" ]; then
