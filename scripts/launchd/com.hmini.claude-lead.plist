@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  로그인할 때 tmux 리더 세션을 띄운다 (선택).
+  설치 (사용자가 직접):
+    1. 아래 두 경로의 USERNAME, 저장소 경로, 앱 폴더를 실제 값으로 바꾼다.
+    2. cp scripts/launchd/com.hmini.claude-lead.plist ~/Library/LaunchAgents/
+    3. launchctl load ~/Library/LaunchAgents/com.hmini.claude-lead.plist
+  해제: launchctl unload ~/Library/LaunchAgents/com.hmini.claude-lead.plist
+  로그: /tmp/claude-lead.log
+  재부팅 후 자동 로그인이 켜져 있어야 동작한다.
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.hmini.claude-lead</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/zsh</string>
+    <string>-lc</string>
+    <string>/Users/USERNAME/code/hmini-devenv-setting/scripts/start-lead.sh /Users/USERNAME/code/myapp lead</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/tmp/claude-lead.log</string>
+  <key>StandardErrorPath</key>
+  <string>/tmp/claude-lead.log</string>
+</dict>
+</plist>

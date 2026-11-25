@@ -1,0 +1,35 @@
+# PR이 열리거나 갱신되면 Claude가 리뷰 코멘트를 남긴다.
+# claude.yml과 같은 시크릿 CLAUDE_CODE_OAUTH_TOKEN을 쓴다. Pro 한도를 함께 쓰므로
+# PR이 많아지면 types에서 synchronize를 빼서 처음 열릴 때만 리뷰하게 줄인다.
+name: Claude PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+jobs:
+  review:
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            저장소: ${{ github.repository }}, PR 번호: ${{ github.event.pull_request.number }}
+            AGENTS.md의 규칙을 기준으로 이 PR을 리뷰하세요.
+            정확성, 보안, API 계약, 테스트 누락만 봅니다. 스타일 취향 지적은 하지 않습니다.
+            문제마다 파일:줄, 심각도, 이유를 적어 PR에 코멘트 하나로 남기세요.
+            문제가 없으면 "지적 없음"과 확인한 범위를 남기세요.
+          claude_args: >-
+            --max-turns 15
+            --allowedTools "Bash(gh pr view:*),Bash(gh pr diff:*),Bash(gh pr comment:*)"
