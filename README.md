@@ -88,6 +88,7 @@ templates/                # 앱 저장소 루트에 복사할 파일
 - `.env`: 비밀이 아닌 설정. 에이전트가 읽을 수 있습니다.
 - `.env.confidential`: API 키, 토큰 같은 비밀값. 전역 gitignore에 들어가고, Claude Code에서는 `block-confidential.sh` 훅이 이 파일 이름이 들어간 모든 도구 호출(Read, Edit, Bash 등)을 막습니다.
 - 키 이름은 `.env.confidential.example`에 값 없이 적어 커밋합니다.
+- 훅은 파일 경로, 검색 패턴, Bash 명령만 검사합니다. 문서 본문에 이 파일 이름을 적는 것은 막지 않습니다. 다만 Bash 명령에 이름이 들어가면(예: `grep`으로 이름 찾기) 막힙니다.
 - 한계: 훅은 파일 이름을 보고 막으므로, 파일 이름 없이 읽는 코드(예: 앱을 실행해 값을 출력)까지 막지는 못합니다. Codex에는 같은 훅이 없어 `AGENTS.md` 규칙으로만 지킵니다.
 
 ## 되돌리기
