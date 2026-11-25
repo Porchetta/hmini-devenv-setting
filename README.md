@@ -35,6 +35,7 @@ defaults/
 scripts/
   check-prereqs.sh        # 1단계: 필요한 도구, 절전 설정 점검 (아무것도 바꾸지 않음)
   install-defaults.sh     # 3단계: 기본 설정 연결 (--dry-run, --restore, 기존 파일 백업)
+  install-plugins.sh      # 3-2단계: 기본 플러그인, skill, MCP 전역 설치 (--dry-run)
   start-lead.sh           # 3단계: tmux에 리더 세션 띄우기
   install-templates.sh    # 4~8단계: 앱 저장소에 템플릿 복사 (기존 파일은 덮어쓰지 않음)
   launchd/com.hmini.claude-lead.plist  # 재부팅 후 리더 세션 자동 시작 (선택)
@@ -54,6 +55,12 @@ templates/                # 앱 저장소 루트에 복사할 파일
   - `./scripts/install-defaults.sh --dry-run`으로 바뀔 내용 확인 후 `./scripts/install-defaults.sh`
   - 새 Claude 세션에서 `/memory`에 `~/.claude/CLAUDE.md`, `/agents`에 `reviewer`가 보이는지 확인
   - 새 Codex 세션에서 기본 규칙(한국어 응답 등)이 적용되는지 확인
+- [ ] **3-2. 기본 플러그인**: `./scripts/install-plugins.sh` (사용자가 직접 실행)
+  - Claude: superpowers, pyright-lsp, typescript-lsp, context7, security-guidance, frontend-design, codex (모두 공식 마켓플레이스)
+  - Codex: superpowers, codex-security, Context7 MCP
+  - 공용: FastAPI 공식 skill (`npx skills`)
+  - LSP 플러그인용 언어 서버: `pyright`, `typescript-language-server` (npm 전역)
+  - 설치 후 새 세션에서 `/context`로 토큰 부담 확인. superpowers는 작은 작업에 executing-plans 경로가 저렴함
 - [ ] **3-1. 상시 리더 세션**
   - Claude Code `/config`에서 Remote Control을 모든 세션에 켜고 푸시 알림 켜기
   - `./scripts/start-lead.sh ~/claude-workspace/<앱저장소>` 실행 후 폰 Claude 앱 Code 탭에서 세션 확인
