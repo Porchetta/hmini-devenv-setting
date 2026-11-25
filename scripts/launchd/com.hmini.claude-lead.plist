@@ -3,7 +3,7 @@
 <!--
   로그인할 때 tmux 리더 세션을 띄운다 (선택).
   설치 (사용자가 직접):
-    1. 아래 두 경로의 USERNAME, 저장소 경로, 앱 폴더를 실제 값으로 바꾼다.
+    1. 아래 경로의 USERNAME을 실제 값으로 바꾼다. 리더 폴더 기본값은 ~/claude-workspace.
     2. cp scripts/launchd/com.hmini.claude-lead.plist ~/Library/LaunchAgents/
     3. launchctl load ~/Library/LaunchAgents/com.hmini.claude-lead.plist
   해제: launchctl unload ~/Library/LaunchAgents/com.hmini.claude-lead.plist
@@ -18,7 +18,7 @@
   <array>
     <string>/bin/zsh</string>
     <string>-lc</string>
-    <string>/Users/USERNAME/code/hmini-devenv-setting/scripts/start-lead.sh /Users/USERNAME/code/myapp lead</string>
+    <string>/Users/USERNAME/claude-workspace/hmini-devenv-setting/scripts/start-lead.sh /Users/USERNAME/claude-workspace lead</string>
   </array>
   <key>RunAtLoad</key>
   <true/>
